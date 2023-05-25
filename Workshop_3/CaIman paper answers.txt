@@ -1,0 +1,23 @@
+1. With the deconvolution of the calcium traces is meant to separate the raw spike train signal from the fluorescence from the calcium traces. Fluorescent calcium indicators are used to observe spiking activity but to obtain clear spiking data the spike train signal needs to be 'extracted' from the fluorescence traces, this is done using deconvolution.
+
+2. CaIman introduces tests based on supervised and unsupervised learning which are applied after the processing of each patch, and additionally after merging and refining of the patches.
+
+For motion correction Caiman uses NoRMCorre algorithm. NoRMCorre operates by splitting the field of view into overlapping spatial patches along all directions. The patches are registered at a sub-pixel resolution for rigid translation against a regularly updated template. The estimated alignments are subsequently up-sampled to create a smooth motion field for each frame that can efficiently approximate non-rigid artifacts in a piecewise-rigid manner. So the steps the algorithm takes, starting at an initial template, are:
+
+	1. Rigid motion correct frame.
+
+	2. Tile the field of view in overlapping patches.
+
+	3. Rigid motion correct each patch constraining the shifts.
+
+	4. Upsample the grid of shifts.
+
+	5. Apply the shifts to each sub patch.
+
+	6. Merge all the corrected patches into a single coherent image.
+
+	7. Apply the shifts to the frame
+
+	8. update the template.
+
+3. The spike correlation metric used in the CNMF to quantify the performance of activity deconvolution methods is empirically very sensitive to spike jitter. The situation is even more complicated in automatically quantifying the performance of spatial footprint identification methods. Simple correlation-based metrics, for example, can be insensitive to the detailed morphological structure, and even the comparison against ground truth data can be challenging due to potential spatial overlap, poor expression, or unmodeled background activity.
